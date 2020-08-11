@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import django_heroku
 import dj_database_url
-from decouple import config,Csv 
+from decouple import config,Csv
 
 
 
@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'socialmedia.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-MODE=config("MODE", default="dev")
+MODE="dev"
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 # development
