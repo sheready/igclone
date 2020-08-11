@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for post in posts %}
+    <div class="mt-5 container border border-secondary">
+         <a href="{% url 'profile' %}"><img class="ml-5 rounded-circle article-img float-left" style="width:100px;height:100px" src="{{ post.author.profile.image.url}}"></a>
+        <h2 class="text float-left"> {{ post.author }} </h2><br><br>
+        
+        <div class="mt-5 container">
+           <img src="{{post.article_image.url}}" class="img-responsive " alt="Image" ></a> 
+        </div>
+        <div class="container">
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <i ><button class="far fa-heart btn btn-danger" type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Like</button> </i>
+                <a href="{% url 'add_comment' post.pk %}"><i class="far fa-comment"></i></a>
+            </form>
+           
+        </div>
+        <div class="container">
+            <p class="text float-left" style="font-weight: bold;font-size: 15px;"> {{ post.author }} </p>
+            <p class="text float-left"> {{ post.caption }} </p><br>
+            
+        </div>
+        <div class="container">
+            <h4 class="text">Comments</h4>
+            {% if not post.comments.all %}
+                Be the first to comment on this post <a href="{% url 'add_comment' post.pk %}">
+                    Comment
+                </a>
+            
+            {% else %}
+                
+                {%for comment in post.comments.all%}
+                    <strong>
+                        {{ comment.name}} 
+
+                    </strong>
+                    <br/>
+                    
+                    {{ comment.body}}
+                    <p>{{ comment.date_added }}</p>
+                
+                {% endfor %}
+                    <br>
+                    <a href="{% url 'add_comment' post.pk %}">Add comment..</a>
+
+            {% endif%}
+        </div> <br>
+        
+       
+        
+        <div class="container">
+            <small class="text-muted float-left">{{post.date_posted}}</small>    
+        </div>
+       
+        <br>
+        
+       
+        
+            
+    </div>
+    <hr>
+
+
+{% endfor %}
+ 
+{% endblock %}
+ 
