@@ -7,7 +7,7 @@
         <h2 class="text float-left"> {{ post.author }} </h2><br><br>
         
         <div class="mt-5 container">
-           <a href="{% url 'post-detail' %}"><img src="{{post.article_image.url}}" class="img-responsive " alt="Image" ></a>
+           <a href="{% url 'post-detail' post.id %}"><img src="{{post.article_image.url}}" class="img-responsive " alt="Image" ></a>
         </div>
         <div class="container">
             <form action="{% url 'like_post' post.pk %}" method="POST">
