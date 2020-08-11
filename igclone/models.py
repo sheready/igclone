@@ -16,8 +16,8 @@ class Post(models.Model):
         return self.article_image
     
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(Post,self).save(*args, **kwargs)
 
         img = Image.open(self.article_image.path)
 

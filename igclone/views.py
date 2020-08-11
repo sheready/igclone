@@ -39,6 +39,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post 
     fields = ['article_image','caption']
     template_name = 'post_form.html'
+    success_url = '/'
     
     
     def form_valid(self, form):
