@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="mt-5 container-fluid border border-secondary">
+        <img class="rounded-circle article-img float-left" style="width:100px;height:100px" src="{{ object.author.profile.image.url}}">
+        <h2 class="text float-left"> {{ object.author }} </h2><br><br>
+        
+        <div class="container">
+            <img src="{{object.article_image.url}}" class="img-responsive d-block img-thumbnail" alt="Image" >
+        </div>
+        <div class="container">
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Like</button> - {{ total_likes }} Likes
+            </form>
+        </div>
+        <div class="container">
+            <p class="text float-left" style="font-weight: bold;font-size: 15px;"> {{ object.author }} </p>
+            <p class="text float-left"> {{ object.caption }} </p><br>
+            
+        </div>
+        <div class="container">
+            <h4 class="text">Comments</h4>
+            {% if not post.comments.all %}
+                Be the first to comment on this post <a href="{% url 'add_comment' post.pk %}">
+                    Comment
+                </a>
+            
+            {% else %}
+                
+                {%for comment in post.comments.all%}
+                    <strong>
+                        {{ comment.name}} 
+
+                    </strong>
+                    <br/>
+                    
+                    {{ comment.body}}
+                    <p>{{ comment.date_added }}</p>
+                
+                {% endfor %}
+                    <br>
+                    <a href="{% url 'add_comment' post.pk %}">Add comment..</a>
+
+            {% endif%}
+        </div> <br>
+        <div class="container">
+            <a class="btn btn-danger" href="{% url 'post-update' object.id %}" >Edit post </a>
+            <a class="btn btn-danger" href="{% url 'post-delete' object.id %}" >Delete post </a>
+        </div>
+        <br>
+        
+        <div class="container">
+            <small class="text-muted float-left">{{object.date_posted|date:"F d,Y"}}</small>    
+        </div>
+       
+        <br>
+        
+       
+        
+            
+    </div>
+    <hr>
+
+
+{% endblock %}
+ 
