@@ -13,7 +13,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name = 'blog_posts')
     
     def __str__(self):
-        return f'{self.user.name} Post'
+        return self.article_image
     
 
     def save(self):
