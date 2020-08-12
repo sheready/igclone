@@ -12,12 +12,12 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name = 'blog_posts')
     
-    def __self__(self):
+    def __str__(self):
         return self.article_image
     
 
-    def save(self, *args, **kwargs):
-        super(Post,self).save(*args, **kwargs)
+    def save(self):
+        super().save()
 
         img = Image.open(self.article_image.path)
 
@@ -31,6 +31,13 @@ class Post(models.Model):
     
     def total_likes(self):
         return self.likes.count()
+
+class Follow(models.Model):
+    follower = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='following')
+    followed = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='followers')
+
+    def __str__(self):
+        return f'{self.follower} Follow'
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments',on_delete=models.CASCADE)

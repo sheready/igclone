@@ -37,7 +37,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post 
-    fields = ['article_image','caption']
+    fields = ['caption']
     template_name = 'post_form.html'
     success_url = reverse_lazy('igclone-home')
     
