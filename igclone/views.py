@@ -4,12 +4,13 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from .models import Post, Comment
+from .models import Post, Comment,Follow
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.urls import reverse_lazy,reverse
 from .forms import CommentForm
 from PIL import Image
+from users.models import Profile
 
 # Create your views here.
 def home(request):
@@ -39,7 +40,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post 
     fields = ['article_image','caption']
     template_name = 'post_form.html'
-    success_url = reverse_lazy('igclone-home')
+    
     
     
     def form_valid(self, form):
@@ -50,7 +51,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model = Post 
     fields = ['article_image','caption']
     template_name = 'post_form.html'
-    success_url = reverse_lazy('igclone-home')
+    
     
     
     def form_valid(self, form):
@@ -102,6 +103,20 @@ class AddCommentView(LoginRequiredMixin,CreateView):
         return super().form_valid(form)
 
     success_url = reverse_lazy('igclone-home')
+
+def unfollow(request, to_unfollow):
+    if request.method == 'GET':
+        user_profile2 = Profile.objects.get(pk=to_unfollow)
+        unfollow_d = Follow.objects.filter(follower = request.post.profile, followed = user_profile2)
+        unfollow_d.delete()
+        return redirect('profile',user_profile2.post.username)
+
+def follow(request,to_follow):
+    if request.method == 'GET':
+        user_profile3 = Profile.objects.get(pk=to_follow)
+        follow_s = Follow(follower=request.user.profile,followed=user_profile3)
+        follow_s.save()
+        return redirect('profile',user_profile3.post.username)
 
 def register(request):
     if request.method == 'POST':

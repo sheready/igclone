@@ -12,6 +12,8 @@ urlpatterns = [
     path('like/<int:pk>/',LikeView, name='like_post'),
     path('post/<int:pk>/comment/',AddCommentView.as_view(),name = 'add_comment'),
     path('post/<int:pk>/delete/',PostDeleteView.as_view(), name = 'post-delete'),
+    path('unfollow/<to_unfollow>',views.unfollow,name='unfollow'),
+    path('follow/<to_follow>',views.follow,name='follow')
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
