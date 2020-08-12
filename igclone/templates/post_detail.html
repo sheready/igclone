@@ -46,8 +46,8 @@
             {% endif%}
         </div> <br>
         <div class="container">
-            <a class="btn btn-danger" href="{% url 'post-update' post.pk %}" >Edit post </a>
-            <a class="btn btn-danger" href="{% url 'post-delete' object.id %}" >Delete post </a>
+            <a class="btn btn-danger" href="{% url 'post-update' post.id %}" >Edit post </a>
+            <a class="btn btn-danger" href="{% url 'post-delete' post.id %}" >Delete post </a>
         </div>
         <br>
         
