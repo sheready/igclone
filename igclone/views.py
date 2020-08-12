@@ -39,7 +39,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post 
     fields = ['article_image','caption']
     template_name = 'post_form.html'
-    success_url = '/'
+    success_url = reverse_lazy('igclone-home')
     
     
     def form_valid(self, form):
@@ -50,6 +50,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model = Post 
     fields = ['article_image','caption']
     template_name = 'post_form.html'
+    success_url = reverse_lazy('igclone-home')
     
     
     def form_valid(self, form):
@@ -75,7 +76,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     model = Post
     template_name = 'post_confirm_delete.html'
-    success_url = '/'
+    success_url = reverse_lazy('igclone-home')
 
     def test_func(self):
         post = self.get_object()
