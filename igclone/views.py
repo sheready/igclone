@@ -63,8 +63,8 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
             return True
         return False
     
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(Post,self).save(*args, **kwargs)
 
         img = Image.open(self.article_image.path)
 
